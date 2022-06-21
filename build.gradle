@@ -11,3 +11,10 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+tasks.register('generateRepo', Zip) {
+    def publishTask = tasks.named('publishReleasePublicationToMyrepoRepository')
+    from publishTask.map { it.getRepository().getUrl() }
+    into 'xlib'
+    archiveFileName.set('xlib.zip')
+}
+
